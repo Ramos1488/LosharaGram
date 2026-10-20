@@ -1,0 +1,92 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>LosharaGram</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>
+:root{color-scheme:dark;--rail:#1b2a3a;--list:#222236;--pri:#3a8fe0;--sub:#8a8fa6;--hov:#2c2c44;--line:#2f2f48;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0;background:#171726;color:#fff;font:14px system-ui,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}.hide{display:none!important}
+svg{display:block}
+#login{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center}
+.logo{width:92px;height:92px;border-radius:50%;background:var(--pri);display:grid;place-items:center;margin-bottom:8px}
+.lb{display:flex;align-items:center;gap:10px;width:270px;padding:11px 16px;border-radius:10px;background:var(--list);border:1px solid var(--line);text-decoration:none;color:#fff;font-weight:600}
+.lb:hover{background:var(--hov)}
+#app{height:100%;display:flex}
+#rail{width:72px;background:var(--rail);display:flex;flex-direction:column;flex:none}
+.ri{height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;color:#9fb1c5}
+.ri.on{background:#27405a;color:#5aaeff}.ri:hover{background:#223850}
+aside{width:300px;background:var(--list);display:flex;flex-direction:column;position:relative;flex:none}
+.sb{display:flex;align-items:center;gap:8px;margin:10px;background:#2b2b45;border-radius:22px;padding:0 12px;height:38px;color:var(--sub)}
+.sb input{flex:1;background:none;border:0;outline:0;color:#fff;font:inherit;min-width:0}
+.av{border-radius:50%;background:var(--pri);display:grid;place-items:center;font-weight:700;overflow:hidden;flex:none}
+.av img{width:100%;height:100%;object-fit:cover}
+#empty{margin:auto;text-align:center;color:var(--sub);padding:20px}
+main{flex:1;position:relative;overflow:hidden;display:grid;place-items:center;min-width:0;background:radial-gradient(circle at 80% 22%,#fff 0 1.6%,#b9c6ff66 2.6%,#2a3a8a33 9%,transparent 22%),linear-gradient(#05070f,#0d1226 55%,#1a2238)}
+main::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(#cfd6e6,#3d4660);clip-path:polygon(0 72%,30% 56%,60% 36%,100% 14%,100% 100%,0 100%);opacity:.8}
+.pill{position:relative;z-index:1;background:#0008;padding:4px 14px;border-radius:14px;font-weight:600;font-size:13px}
+#drawer{position:absolute;inset:0;background:var(--list);z-index:5;display:flex;flex-direction:column;overflow:auto;transform:translateX(-100%);transition:.2s}
+#drawer.on{transform:none}
+.dh{display:flex;align-items:center;gap:10px;padding:12px;font-weight:700}
+.card{display:flex;gap:12px;align-items:center;padding:14px;background:#2b2b45;margin:0 10px 8px;border-radius:12px}
+.sec{padding:10px 14px 4px;color:var(--pri);font-weight:700;font-size:12px;text-transform:uppercase}
+.it{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px}
+.it:hover{background:var(--hov)}.it small{display:block;color:var(--sub)}
+.it select,.it input[type=text]{background:#2b2b45;color:#fff;border:1px solid var(--line);border-radius:8px;padding:6px;max-width:150px}
+.it input[type=checkbox]{width:18px;height:18px;accent-color:var(--pri)}
+.tag{background:var(--pri);border-radius:8px;padding:1px 7px;font-size:11px;font-weight:700}
+body.stream .blur{filter:blur(6px)}
+@media(max-width:700px){aside{width:100%}main{display:none}}
+</style></head><body>
+<div id="login" class="hide">
+ <div class="logo" id="bigLogo"></div><h1 style="margin:0">LosharaGram</h1>
+ <p style="color:var(--sub);margin:0 0 10px">Sign in to continue</p>
+ <a class="lb" href="/api/auth/google"><span data-i="mail"></span>Continue with Gmail</a>
+ <a class="lb" href="/api/auth/discord"><span data-i="ctrl"></span>Continue with Discord</a>
+ <a class="lb" href="/api/auth/github"><span data-i="git"></span>Continue with GitHub</a>
+</div>
+<div id="app" class="hide">
+ <nav id="rail"><button class="ri" id="menuBtn"><span data-i="menu"></span></button><div class="ri on"><span data-i="chat"></span>All chats</div></nav>
+ <aside>
+  <div class="sb"><span data-i="search" data-s="18"></span><input placeholder="Search"></div>
+  <div id="empty"><div style="display:flex;justify-content:center;margin-bottom:8px" data-i="chat" data-s="44"></div>No chats yet</div>
+  <div id="drawer"></div>
+ </aside>
+ <main><div class="pill">Select a chat to start messaging</div></main>
+</div>
+<script>
+const I={menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',search:'<circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/>',back:'<path d="M15 5l-7 7 7 7"/>',shield:'<path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/>',out:'<path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',git:'<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10M18 11c0 4-12 2-12 6"/>',ctrl:'<rect x="3" y="7" width="18" height="11" rx="5"/><path d="M8 10v5M5.5 12.5h5M15 11h.01M18 14h.01"/>',plane:'<path d="M21 3L3 11l6 2 2 6 3-4 5 3z"/>'};
+const ic=(n,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[n]}</svg>`;
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=ic(e.dataset.i,+e.dataset.s||22));
+$('#bigLogo').innerHTML=ic('plane',48);
+let P={ghost:0,stream:0,spam:1,res:'1440',fps:'60',rpcT:'',rpcD:''},U=null;
+try{Object.assign(P,JSON.parse(localStorage.lg||'{}'))}catch{}
+const save=()=>{try{localStorage.lg=JSON.stringify(P)}catch{};document.body.classList.toggle('stream',!!P.stream)};
+const avatar=(s)=>`<div class="av" style="width:${s}px;height:${s}px">${U.avatar?`<img src="${esc(U.avatar)}" alt="">`:esc((U.name||'?')[0])}</div>`;
+const tog=(k,t,d)=>`<label class="it"><span>${t}<small>${d}</small></span><input type="checkbox" data-k="${k}" ${P[k]?'checked':''}></label>`;
+function drawer(view){
+ const d=$('#drawer');d.classList.add('on');
+ if(view==='admin'){d.innerHTML=`<div class="dh"><button data-a="main">${ic('back')}</button>Admin panel</div>
+  <div class="sec">Account</div><div class="it"><span>ID<small class="blur">${esc(U.id)}</small></span></div>
+  <div class="sec">Verification requests</div><div class="it"><small>No requests</small></div>
+  <div class="sec">Spam reports</div><div class="it"><small>No reports</small></div>
+  <div class="sec">Users</div><div class="it"><small>No users</small></div>`;return}
+ d.innerHTML=`<div class="dh"><button data-a="close">${ic('back')}</button>Settings</div>
+ <div class="card">${avatar(54)}<div><b class="blur">${esc(U.name)}</b>${U.isAdmin?' <span class="tag">ADMIN</span>':''}<div style="color:var(--sub)" class="blur">${esc(U.email||U.id)}</div></div></div>
+ ${U.isAdmin?`<button class="it" style="width:100%" data-a="admin"><span style="display:flex;gap:10px">${ic('shield')}Admin panel</span></button>`:''}
+ <div class="sec">LosharaRPC</div>
+ <div class="it"><span>Activity</span><select data-k="rpcT"><option value="">None</option>${['Playing','Listening to','Watching','Streaming'].map(x=>`<option ${P.rpcT===x?'selected':''}>${x}</option>`).join('')}</select></div>
+ <div class="it"><span>Name</span><input type="text" data-k="rpcD" value="${esc(P.rpcD)}" placeholder="osu!"></div>
+ <div class="sec">Privacy</div>
+ ${tog('ghost','Ghost Mode','Hide online, typing and read status')}${tog('stream','Streamer Mode','Blur personal data')}${tog('spam','Anti Spam','Block spam and rate-limit sending')}
+ <div class="sec">Calls and screen sharing</div>
+ <div class="it"><span>Resolution</span><select data-k="res">${['720','1080','1440'].map(x=>`<option value="${x}" ${P.res===x?'selected':''}>${x}p</option>`).join('')}</select></div>
+ <div class="it"><span>Frame rate</span><select data-k="fps">${['30','60'].map(x=>`<option ${P.fps===x?'selected':''}>${x}</option>`).join('')}</select></div>
+ <div class="sec">Plugins</div><div class="it"><small>No plugins installed</small></div>
+ <a class="it" href="/api/logout" style="color:#ff6b6b;text-decoration:none"><span style="display:flex;gap:10px">${ic('out')}Log out</span></a>`;
+}
+$('#drawer').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;a==='close'?$('#drawer').classList.remove('on'):drawer(a)});
+$('#drawer').addEventListener('change',e=>{const k=e.target.dataset.k;if(!k)return;P[k]=e.target.type==='checkbox'?+e.target.checked:e.target.value;save()});
+$('#menuBtn').onclick=()=>drawer('main');
+fetch('/api/me').then(r=>r.ok?r.json():null).then(j=>{
+ if(j&&j.user){U=j.user;$('#app').classList.remove('hide');save()}else $('#login').classList.remove('hide')
+}).catch(()=>$('#login').classList.remove('hide'));
+</script></body></html>
