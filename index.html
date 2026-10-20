@@ -1,92 +1,133 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>LosharaGram</title>
+<!DOCTYPE html><html lang="en" data-theme="gray"><head><meta charset="utf-8"><title>LosharaGram</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>
-:root{color-scheme:dark;--rail:#1b2a3a;--list:#222236;--pri:#3a8fe0;--sub:#8a8fa6;--hov:#2c2c44;--line:#2f2f48;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-*{box-sizing:border-box}html,body{height:100%;margin:0;background:#171726;color:#fff;font:14px system-ui,"Segoe UI",Roboto,sans-serif}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}.hide{display:none!important}
-svg{display:block}
+:root{--bg:#242426;--side:#2d2d30;--card:#38383c;--hov:#3a3a3f;--line:#424247;--txt:#ececee;--sub:#9d9da5;--pri:#5b9dff;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[data-theme=dark]{--bg:#0f0f10;--side:#18181a;--card:#222225;--hov:#222225;--line:#2a2a2e}
+[data-theme=light]{--bg:#e9e9ec;--side:#f6f6f8;--card:#fff;--hov:#ececf0;--line:#d8d8de;--txt:#18181b;--sub:#6b6b75;color-scheme:light}
+*{box-sizing:border-box}html,body{height:100%;margin:0;background:var(--bg);color:var(--txt);font:14px system-ui,"Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}.hide{display:none!important}svg{display:block;flex:none}
+input,select,textarea{font:inherit;background:var(--card);color:var(--txt);border:1px solid var(--line);border-radius:8px;padding:8px 10px;outline:0;min-width:0}
+small{color:var(--sub);display:block}
+.btn{background:var(--pri);color:#fff;border-radius:8px;padding:7px 14px;font-weight:600;white-space:nowrap}.btn.g{background:var(--card);color:var(--txt);border:1px solid var(--line)}
+.ib{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:var(--sub)}.ib:hover{background:var(--hov)}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;overflow:hidden;flex:none}.av img{width:100%;height:100%;object-fit:cover}
+.vb{width:16px;height:16px;display:inline-block;vertical-align:-3px;margin-left:4px}
+.tag{background:var(--pri);color:#fff;border-radius:6px;padding:1px 6px;font-size:11px;font-weight:700;margin-left:6px}
+.mi{flex:1;min-width:0}.mi b{overflow:hidden;text-overflow:ellipsis}.mi small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #login{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px;text-align:center}
-.logo{width:92px;height:92px;border-radius:50%;background:var(--pri);display:grid;place-items:center;margin-bottom:8px}
-.lb{display:flex;align-items:center;gap:10px;width:270px;padding:11px 16px;border-radius:10px;background:var(--list);border:1px solid var(--line);text-decoration:none;color:#fff;font-weight:600}
-.lb:hover{background:var(--hov)}
+.logo{width:88px;height:88px;border-radius:24px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;margin-bottom:8px}
+.lb{display:flex;align-items:center;gap:10px;width:270px;padding:11px 16px;border-radius:10px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--txt);font-weight:600}
 #app{height:100%;display:flex}
-#rail{width:72px;background:var(--rail);display:flex;flex-direction:column;flex:none}
-.ri{height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:11px;color:#9fb1c5}
-.ri.on{background:#27405a;color:#5aaeff}.ri:hover{background:#223850}
-aside{width:300px;background:var(--list);display:flex;flex-direction:column;position:relative;flex:none}
-.sb{display:flex;align-items:center;gap:8px;margin:10px;background:#2b2b45;border-radius:22px;padding:0 12px;height:38px;color:var(--sub)}
-.sb input{flex:1;background:none;border:0;outline:0;color:#fff;font:inherit;min-width:0}
-.av{border-radius:50%;background:var(--pri);display:grid;place-items:center;font-weight:700;overflow:hidden;flex:none}
-.av img{width:100%;height:100%;object-fit:cover}
-#empty{margin:auto;text-align:center;color:var(--sub);padding:20px}
-main{flex:1;position:relative;overflow:hidden;display:grid;place-items:center;min-width:0;background:radial-gradient(circle at 80% 22%,#fff 0 1.6%,#b9c6ff66 2.6%,#2a3a8a33 9%,transparent 22%),linear-gradient(#05070f,#0d1226 55%,#1a2238)}
-main::after{content:"";position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(#cfd6e6,#3d4660);clip-path:polygon(0 72%,30% 56%,60% 36%,100% 14%,100% 100%,0 100%);opacity:.8}
-.pill{position:relative;z-index:1;background:#0008;padding:4px 14px;border-radius:14px;font-weight:600;font-size:13px}
-#drawer{position:absolute;inset:0;background:var(--list);z-index:5;display:flex;flex-direction:column;overflow:auto;transform:translateX(-100%);transition:.2s}
-#drawer.on{transform:none}
-.dh{display:flex;align-items:center;gap:10px;padding:12px;font-weight:700}
-.card{display:flex;gap:12px;align-items:center;padding:14px;background:#2b2b45;margin:0 10px 8px;border-radius:12px}
-.sec{padding:10px 14px 4px;color:var(--pri);font-weight:700;font-size:12px;text-transform:uppercase}
-.it{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px}
-.it:hover{background:var(--hov)}.it small{display:block;color:var(--sub)}
-.it select,.it input[type=text]{background:#2b2b45;color:#fff;border:1px solid var(--line);border-radius:8px;padding:6px;max-width:150px}
-.it input[type=checkbox]{width:18px;height:18px;accent-color:var(--pri)}
-.tag{background:var(--pri);border-radius:8px;padding:1px 7px;font-size:11px;font-weight:700}
+aside{width:330px;background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;flex:none}
+.bar{display:flex;align-items:center;gap:10px;padding:12px}
+.tabs{display:flex;gap:4px;padding:0 10px 8px}.tabs button{flex:1;padding:7px 4px;border-radius:8px;color:var(--sub);font-weight:600}
+.tabs button.on{background:var(--card);color:var(--txt)}
+.srch{padding:0 10px 8px}.srch input{width:100%}
+#list{flex:1;overflow:auto}
+.it{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;width:100%;text-align:left}.it:hover,.it.on{background:var(--hov)}
+.note{color:var(--sub);text-align:center;padding:24px 16px}
+main{flex:1;display:flex;flex-direction:column;min-width:0}
+.hd{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--side);border-bottom:1px solid var(--line)}
+.back{display:none}
+.posts{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px;align-items:center}
+.post,.about{width:min(620px,100%);background:var(--card);border-radius:12px;padding:10px 14px;white-space:pre-wrap;word-wrap:break-word}
+.about{color:var(--sub);background:none;border:1px dashed var(--line)}
+.post small{text-align:right;font-size:11px;margin-top:4px}
+.comp{display:flex;gap:8px;padding:10px 14px;background:var(--side);border-top:1px solid var(--line)}.comp input{flex:1}
+.empty{margin:auto;color:var(--sub);text-align:center}
+.mask{position:fixed;inset:0;background:#0009;display:grid;place-items:center;z-index:20;padding:12px}
+.box{background:var(--side);border:1px solid var(--line);border-radius:14px;padding:16px;width:min(440px,100%);max-height:92%;overflow:auto}
+.box h3{margin:0 0 10px}.box input,.box select,.box textarea{width:100%;margin:4px 0}
+.sec{color:var(--pri);font-weight:700;font-size:12px;text-transform:uppercase;margin:14px 0 4px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0}.row input[type=checkbox]{width:18px;height:18px;accent-color:var(--pri);margin:0}.row select,.row input[type=text]{width:150px}
+.card2{display:flex;gap:12px;align-items:center;background:var(--card);border-radius:12px;padding:12px}
+.gwrap{flex:1;overflow:auto;padding:14px}.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:14px}
+.gift{background:var(--card);border-radius:12px;padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+#gres .it{padding:6px 8px;border-radius:8px}
 body.stream .blur{filter:blur(6px)}
-@media(max-width:700px){aside{width:100%}main{display:none}}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:8px 16px;border-radius:18px;z-index:30;opacity:0;transition:.3s;pointer-events:none}#toast.on{opacity:1}
+@media(max-width:700px){aside{width:100%}main{display:none}#app.chat aside{display:none}#app.chat main{display:flex}.back{display:grid}}
 </style></head><body>
-<div id="login" class="hide">
- <div class="logo" id="bigLogo"></div><h1 style="margin:0">LosharaGram</h1>
- <p style="color:var(--sub);margin:0 0 10px">Sign in to continue</p>
- <a class="lb" href="/api/auth/google"><span data-i="mail"></span>Continue with Gmail</a>
- <a class="lb" href="/api/auth/discord"><span data-i="ctrl"></span>Continue with Discord</a>
- <a class="lb" href="/api/auth/github"><span data-i="git"></span>Continue with GitHub</a>
-</div>
-<div id="app" class="hide">
- <nav id="rail"><button class="ri" id="menuBtn"><span data-i="menu"></span></button><div class="ri on"><span data-i="chat"></span>All chats</div></nav>
- <aside>
-  <div class="sb"><span data-i="search" data-s="18"></span><input placeholder="Search"></div>
-  <div id="empty"><div style="display:flex;justify-content:center;margin-bottom:8px" data-i="chat" data-s="44"></div>No chats yet</div>
-  <div id="drawer"></div>
- </aside>
- <main><div class="pill">Select a chat to start messaging</div></main>
-</div>
+<div id="login" class="hide"><div class="logo" id="lg"></div><h1 style="margin:0">LosharaGram</h1><p style="color:var(--sub);margin:0 0 10px">Sign in to continue</p>
+<a class="lb" href="/api/auth/google" id="b1"></a><a class="lb" href="/api/auth/discord" id="b2"></a><a class="lb" href="/api/auth/github" id="b3"></a></div>
+<div id="app" class="hide"><aside><div class="bar" id="meBar"></div><div class="tabs" id="tabs"></div><div class="srch"><input id="q" placeholder="Search channels"></div><div id="list"></div></aside><main id="main"></main></div>
+<div id="modal" class="mask hide" onclick="if(event.target===this)closeM()"><div class="box" id="box"></div></div><div id="toast"></div>
 <script>
-const I={menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',chat:'<path d="M4 5h16v11H9l-5 4z"/>',search:'<circle cx="11" cy="11" r="6"/><path d="M16 16l5 5"/>',back:'<path d="M15 5l-7 7 7 7"/>',shield:'<path d="M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6z"/>',out:'<path d="M10 4H5v16h5M15 8l4 4-4 4M19 12H9"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',git:'<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10M18 11c0 4-12 2-12 6"/>',ctrl:'<rect x="3" y="7" width="18" height="11" rx="5"/><path d="M8 10v5M5.5 12.5h5M15 11h.01M18 14h.01"/>',plane:'<path d="M21 3L3 11l6 2 2 6 3-4 5 3z"/>'};
+const I={plus:'<path d="M12 5v14M5 12h14"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',back:'<path d="M15 5l-7 7 7 7"/>',mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',git:'<circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="9" r="2"/><path d="M6 7v10M18 11c0 4-12 2-12 6"/>',ctrl:'<rect x="3" y="7" width="18" height="11" rx="5"/><path d="M8 10v5M5.5 12.5h5M15 11h.01M18 14h.01"/>',mega:'<path d="M3 10v4h4l8 5V5l-8 5zM19 9a4 4 0 010 6"/>',plane:'<path d="M21 3L3 11l6 2 2 6 3-4 5 3z"/>'};
 const ic=(n,s=22)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[n]}</svg>`;
-const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-document.querySelectorAll('[data-i]').forEach(e=>e.innerHTML=ic(e.dataset.i,+e.dataset.s||22));
-$('#bigLogo').innerHTML=ic('plane',48);
-let P={ghost:0,stream:0,spam:1,res:'1440',fps:'60',rpcT:'',rpcD:''},U=null;
+const GS={star:'<polygon points="12,2 15,9 22,9.5 17,14.5 18.5,22 12,18 5.5,22 7,14.5 2,9.5 9,9"/>',heart:'<path d="M12 21s-8-5-8-11a4.5 4.5 0 018-2.5A4.5 4.5 0 0120 10c0 6-8 11-8 11z"/>',gem:'<path d="M6 3h12l4 6-10 12L2 9z"/>',crown:'<path d="M3 18l-1-11 6 5 4-8 4 8 6-5-1 11z"/>',rocket:'<path d="M12 2c4 2 6 6 5 11l-3 3h-4l-3-3C6 8 8 4 12 2zM9 17l-3 4 4-1M15 17l3 4-4-1"/>'};
+const GC={star:'#f5c542',heart:'#ef5b7b',gem:'#4dd0e1',crown:'#ffb300',rocket:'#8e9eff'};
+const gsvg=(id,s=40)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="${GC[id]||'#999'}">${GS[id]||''}</svg>`;
+const VB=on=>on?'<svg class="vb" viewBox="0 0 24 24"><path d="M12 2l2.4 2 3.1-.3 1 3 2.7 1.6-1 3 1 3-2.7 1.6-1 3-3.1-.3L12 22l-2.4-2-3.1.3-1-3L2.8 15.7l1-3-1-3 2.7-1.6 1-3 3.1.3z" fill="#3a8fe0"/><path d="M8 12l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/></svg>':'';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const col=s=>{let h=0;for(const c of s)h=(h*31+c.charCodeAt(0))%360;return `hsl(${h} 30% 46%)`};
+const av=(src,n,s)=>`<div class="av" style="width:${s}px;height:${s}px;background:${col(n||'?')};font-size:${s/2.4}px">${src?`<img src="${esc(src)}" alt="">`:esc((n||'?')[0].toUpperCase())}</div>`;
+const fd=t=>new Date(t).toLocaleString([],{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+const app=$('#app');
+let P={theme:'gray',ghost:0,stream:0,spam:1,res:'1440',fps:'60',rpcT:'',rpcD:''},U,tab='mine',CH=[],POSTS=[],cur=null,G=null,RG=[],SEL=null,RES=[],T;
 try{Object.assign(P,JSON.parse(localStorage.lg||'{}'))}catch{}
-const save=()=>{try{localStorage.lg=JSON.stringify(P)}catch{};document.body.classList.toggle('stream',!!P.stream)};
-const avatar=(s)=>`<div class="av" style="width:${s}px;height:${s}px">${U.avatar?`<img src="${esc(U.avatar)}" alt="">`:esc((U.name||'?')[0])}</div>`;
-const tog=(k,t,d)=>`<label class="it"><span>${t}<small>${d}</small></span><input type="checkbox" data-k="${k}" ${P[k]?'checked':''}></label>`;
-function drawer(view){
- const d=$('#drawer');d.classList.add('on');
- if(view==='admin'){d.innerHTML=`<div class="dh"><button data-a="main">${ic('back')}</button>Admin panel</div>
-  <div class="sec">Account</div><div class="it"><span>ID<small class="blur">${esc(U.id)}</small></span></div>
-  <div class="sec">Verification requests</div><div class="it"><small>No requests</small></div>
-  <div class="sec">Spam reports</div><div class="it"><small>No reports</small></div>
-  <div class="sec">Users</div><div class="it"><small>No users</small></div>`;return}
- d.innerHTML=`<div class="dh"><button data-a="close">${ic('back')}</button>Settings</div>
- <div class="card">${avatar(54)}<div><b class="blur">${esc(U.name)}</b>${U.isAdmin?' <span class="tag">ADMIN</span>':''}<div style="color:var(--sub)" class="blur">${esc(U.email||U.id)}</div></div></div>
- ${U.isAdmin?`<button class="it" style="width:100%" data-a="admin"><span style="display:flex;gap:10px">${ic('shield')}Admin panel</span></button>`:''}
- <div class="sec">LosharaRPC</div>
- <div class="it"><span>Activity</span><select data-k="rpcT"><option value="">None</option>${['Playing','Listening to','Watching','Streaming'].map(x=>`<option ${P.rpcT===x?'selected':''}>${x}</option>`).join('')}</select></div>
- <div class="it"><span>Name</span><input type="text" data-k="rpcD" value="${esc(P.rpcD)}" placeholder="osu!"></div>
- <div class="sec">Privacy</div>
- ${tog('ghost','Ghost Mode','Hide online, typing and read status')}${tog('stream','Streamer Mode','Blur personal data')}${tog('spam','Anti Spam','Block spam and rate-limit sending')}
- <div class="sec">Calls and screen sharing</div>
- <div class="it"><span>Resolution</span><select data-k="res">${['720','1080','1440'].map(x=>`<option value="${x}" ${P.res===x?'selected':''}>${x}p</option>`).join('')}</select></div>
- <div class="it"><span>Frame rate</span><select data-k="fps">${['30','60'].map(x=>`<option ${P.fps===x?'selected':''}>${x}</option>`).join('')}</select></div>
- <div class="sec">Plugins</div><div class="it"><small>No plugins installed</small></div>
- <a class="it" href="/api/logout" style="color:#ff6b6b;text-decoration:none"><span style="display:flex;gap:10px">${ic('out')}Log out</span></a>`;
-}
-$('#drawer').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a;a==='close'?$('#drawer').classList.remove('on'):drawer(a)});
-$('#drawer').addEventListener('change',e=>{const k=e.target.dataset.k;if(!k)return;P[k]=e.target.type==='checkbox'?+e.target.checked:e.target.value;save()});
-$('#menuBtn').onclick=()=>drawer('main');
-fetch('/api/me').then(r=>r.ok?r.json():null).then(j=>{
- if(j&&j.user){U=j.user;$('#app').classList.remove('hide');save()}else $('#login').classList.remove('hide')
-}).catch(()=>$('#login').classList.remove('hide'));
+const save=()=>{try{localStorage.lg=JSON.stringify(P)}catch{};document.documentElement.dataset.theme=P.theme;document.body.classList.toggle('stream',!!P.stream)};save();
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),2400)}
+async function api(a,d={}){const r=await fetch('/api/rpc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({a,...d})});
+ const j=await r.json().catch(()=>({error:'Server error'}));if(!r.ok||j.error){toast(j.error||'Error');throw new Error(j.error)}return j}
+function modal(h){$('#box').innerHTML=h;$('#modal').classList.remove('hide')}
+function closeM(){$('#modal').classList.add('hide')}
+$('#box').addEventListener('change',e=>{const k=e.target.dataset.k;if(!k)return;P[k]=e.target.type==='checkbox'?+e.target.checked:e.target.value;save();side()});
+function side(){
+ const r=P.rpcT?`${P.rpcT} ${P.rpcD}`:`${U.coins} coins`;
+ $('#meBar').innerHTML=`${av(U.avatar,U.name,40)}<div class="mi"><b class="blur">${esc(U.name)}</b>${VB(U.verified)}${U.isAdmin?'<span class="tag">ADMIN</span>':''}<small>${esc(r)}</small></div><button class="ib" onclick="newChannel()" title="New channel">${ic('plus')}</button><button class="ib" onclick="settings()" title="Settings">${ic('gear')}</button>`;
+ $('#tabs').innerHTML=[['mine','My channels'],['discover','Discover'],['gifts','Gifts']].map(([k,t])=>`<button class="${tab===k?'on':''}" onclick="setTab('${k}')">${t}</button>`).join('')}
+async function setTab(t){tab=t;cur=null;side();$('#q').parentNode.classList.toggle('hide',t==='gifts');
+ if(t==='gifts'){G=await api('gifts');U.coins=G.coins;RG=(await api('myGifts')).gifts;side();drawList();drawGifts()}
+ else{await loadList();drawEmpty()}}
+async function loadList(){CH=(await api('channels',{mine:tab==='mine',q:tab==='discover'?$('#q').value:''})).channels;drawList()}
+$('#q').oninput=()=>{clearTimeout(T);T=setTimeout(()=>tab==='discover'?loadList():drawList(),250)};
+function drawList(){const L=$('#list');
+ if(tab==='gifts'){L.innerHTML=(RG.length?'<div class="sec" style="padding:0 12px">Received</div>':'')+RG.map(g=>`<div class="it" style="cursor:default">${gsvg(g.gift,34)}<div class="mi"><b>${esc(g.gift)}</b><small>from ${esc(g.from_name)} · ${fd(g.created_at)}</small></div></div>`).join('')||'<div class="note">No gifts received yet</div>';return}
+ const q=$('#q').value.toLowerCase(),rows=tab==='mine'?CH.filter(c=>c.title.toLowerCase().includes(q)||c.slug.includes(q)):CH;
+ L.innerHTML=rows.map(c=>`<div class="it ${cur===c.id?'on':''}" onclick="openCh('${c.id}')">${av(null,c.title,44)}<div class="mi"><b>${esc(c.title)}</b>${VB(c.verified)}<small>@${esc(c.slug)} · ${c.subs} subscribers</small></div></div>`).join('')||`<div class="note">${tab==='mine'?'No channels yet. Create one with the plus button or find some in Discover.':'Nothing found'}</div>`}
+function drawEmpty(){if(tab!=='gifts')$('#main').innerHTML=`<div class="empty">${ic('mega',48)}<p>Select a channel</p></div>`}
+async function openCh(id){cur=id;POSTS=(await api('posts',{channel:id})).posts;drawList();drawCh();app.classList.add('chat')}
+function drawCh(){const c=CH.find(x=>x.id===cur);if(!c)return;const own=c.owner===U.id;
+ $('#main').innerHTML=`<div class="hd"><button class="ib back" onclick="app.classList.remove('chat')">${ic('back')}</button>${av(null,c.title,40)}<div class="mi"><b>${esc(c.title)}</b>${VB(c.verified)}<small>${c.subs} subscribers</small></div>
+ ${own&&!c.verified?`<button class="btn g" onclick="reqV('channel','${c.id}')">${c.verify_requested?'Verification pending':'Request verification'}</button>`:''}${own?'':`<button class="btn ${c.joined?'g':''}" onclick="toggleSub()">${c.joined?'Leave':'Subscribe'}</button>`}</div>
+ <div class="posts" id="posts">${c.about?`<div class="about">${esc(c.about)}</div>`:''}${POSTS.map(p=>`<div class="post">${esc(p.text)}<small>${fd(p.created_at)}</small></div>`).join('')||'<div class="empty">No posts yet</div>'}</div>
+ ${own?`<div class="comp"><input id="pt" placeholder="Write a post" onkeydown="if(event.key==='Enter')post()"><button class="btn" onclick="post()">Publish</button></div>`:''}`;
+ const p=$('#posts');p.scrollTop=1e9}
+async function toggleSub(){const c=CH.find(x=>x.id===cur);await api('sub',{channel:cur,on:!c.joined});c.joined=!c.joined;c.subs+=c.joined?1:-1;drawCh();drawList()}
+async function post(){const t=$('#pt').value.trim();if(!t)return;const j=await api('post',{channel:cur,text:t});POSTS.push(j.post);drawCh()}
+async function reqV(kind,id){if(kind==='user'&&U.verify_requested)return;await api('reqVerify',{kind,id});toast('Request sent');
+ if(kind==='user'){U.verify_requested=true;settings()}else{CH.find(x=>x.id===id).verify_requested=true;drawCh()}}
+function newChannel(){modal(`<h3>New channel</h3><input id="ct" placeholder="Title" maxlength="64"><input id="cs" placeholder="Handle (a-z, 0-9, _)" maxlength="32"><textarea id="ca" rows="3" placeholder="Description" maxlength="255"></textarea>
+ <button class="btn" onclick="mk()">Create</button> <button class="btn g" onclick="closeM()">Cancel</button>`)}
+async function mk(){const j=await api('createChannel',{title:$('#ct').value,slug:$('#cs').value,about:$('#ca').value});closeM();tab='mine';side();await loadList();openCh(j.channel.id)}
+function sw(k,t,d){return `<label class="row"><span>${t}<small>${d}</small></span><input type="checkbox" data-k="${k}" ${P[k]?'checked':''}></label>`}
+function settings(){modal(`<h3>Settings</h3><div class="card2">${av(U.avatar,U.name,56)}<div class="mi"><b class="blur">${esc(U.name)}</b>${VB(U.verified)}<small class="blur">${esc(U.email||U.id)}</small></div></div>
+ <div class="row"><span>Account verification<small>${U.verified?'Your account is verified':'Get a badge next to your name'}</small></span>${U.verified?'':`<button class="btn g" onclick="reqV('user')">${U.verify_requested?'Pending':'Request'}</button>`}</div>
+ ${U.isAdmin?'<button class="btn" onclick="adminP()">Admin panel</button>':''}
+ <div class="sec">Appearance</div><div class="row"><span>Theme</span><select data-k="theme">${['gray','dark','light'].map(x=>`<option value="${x}" ${P.theme===x?'selected':''}>${x[0].toUpperCase()+x.slice(1)}</option>`).join('')}</select></div>
+ <div class="sec">LosharaRPC</div><div class="row"><span>Activity</span><select data-k="rpcT"><option value="">None</option>${['Playing','Listening to','Watching','Streaming'].map(x=>`<option ${P.rpcT===x?'selected':''}>${x}</option>`).join('')}</select></div>
+ <div class="row"><span>Name</span><input type="text" data-k="rpcD" value="${esc(P.rpcD)}" placeholder="osu!"></div>
+ <div class="sec">Privacy</div>${sw('ghost','Ghost Mode','Hide online and read status')}${sw('stream','Streamer Mode','Blur personal data')}${sw('spam','Anti Spam','Rate-limit actions')}
+ <div class="sec">Calls</div><div class="row"><span>Resolution</span><select data-k="res">${['720','1080','1440'].map(x=>`<option value="${x}" ${P.res===x?'selected':''}>${x}p</option>`).join('')}</select></div>
+ <div class="row"><span>Frame rate</span><select data-k="fps">${['30','60'].map(x=>`<option ${P.fps===x?'selected':''}>${x}</option>`).join('')}</select></div>
+ <div class="sec">Plugins</div><small>No plugins installed</small><br><a class="btn g" style="text-decoration:none;display:inline-block" href="/api/logout">Log out</a> <button class="btn g" onclick="closeM()">Close</button>`)}
+async function adminP(){const r=await api('requests');
+ modal(`<h3>Admin panel</h3><div class="sec">Account requests</div>${r.users.map(u=>`<div class="row"><span><b>${esc(u.name)}</b><small>${esc(u.id)}</small></span><span><button class="btn" onclick="dec('user','${esc(u.id)}',1)">Approve</button> <button class="btn g" onclick="dec('user','${esc(u.id)}',0)">Reject</button></span></div>`).join('')||'<small>None</small>'}
+ <div class="sec">Channel requests</div>${r.channels.map(c=>`<div class="row"><span><b>${esc(c.title)}</b><small>@${esc(c.slug)}</small></span><span><button class="btn" onclick="dec('channel','${c.id}',1)">Approve</button> <button class="btn g" onclick="dec('channel','${c.id}',0)">Reject</button></span></div>`).join('')||'<small>None</small>'}
+ <div class="sec">Grant coins</div><input id="gid" placeholder="User ID (e.g. github:123)"><input id="gam" placeholder="Amount" type="number"><button class="btn" onclick="grant()">Grant</button> <button class="btn g" onclick="settings()">Back</button>`)}
+async function dec(k,id,v){await api('setVerified',{kind:k,id,value:v});toast(v?'Verified':'Rejected');adminP()}
+async function grant(){await api('grant',{id:$('#gid').value.trim(),amount:$('#gam').value});toast('Done')}
+function drawGifts(){$('#main').innerHTML=`<div class="hd"><button class="ib back" onclick="app.classList.remove('chat')">${ic('back')}</button><b style="flex:1">Gifts</b><span class="tag">${U.coins} coins</span></div>
+ <div class="gwrap"><input id="gto" style="width:100%" placeholder="Find a user by name" oninput="findU()"><div id="gres"></div><small id="gsel">${SEL?'Sending to '+esc(SEL.name):'Choose a recipient'}</small>
+ <div class="ggrid">${G.catalog.map(g=>`<div class="gift">${gsvg(g.id,48)}<b>${esc(g.name)}</b><small>${g.price} coins</small><button class="btn" onclick="sendG('${g.id}')">Send</button></div>`).join('')}</div></div>`;app.classList.add('chat')}
+function findU(){clearTimeout(T);T=setTimeout(async()=>{RES=(await api('users',{q:$('#gto').value})).users;
+ $('#gres').innerHTML=RES.map((u,i)=>`<button class="it" onclick="pick(${i})">${av(u.avatar,u.name,30)}<b>${esc(u.name)}</b>${VB(u.verified)}</button>`).join('')},300)}
+function pick(i){SEL=RES[i];RES=[];$('#gres').innerHTML='';$('#gsel').textContent='Sending to '+SEL.name}
+async function sendG(id){if(!SEL)return toast('Choose a recipient');if(!confirm('Send gift to '+SEL.name+'?'))return;
+ const j=await api('sendGift',{to:SEL.id,gift:id});U.coins=j.coins;toast('Gift sent');side();drawGifts()}
+$('#lg').innerHTML=ic('plane',44);$('#b1').innerHTML=ic('mail')+'Continue with Gmail';$('#b2').innerHTML=ic('ctrl')+'Continue with Discord';$('#b3').innerHTML=ic('git')+'Continue with GitHub';
+fetch('/api/me').then(r=>r.ok?r.json():null).then(async j=>{
+ if(j&&j.user){U=j.user;app.classList.remove('hide');if(U.dbError)toast('Database is not connected');side();await setTab('mine').catch(()=>{})}
+ else $('#login').classList.remove('hide')}).catch(()=>$('#login').classList.remove('hide'));
 </script></body></html>
