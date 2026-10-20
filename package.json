@@ -1,1 +1,1 @@
-{"name":"losharagram","version":"1.0.0","private":true,"engines":{"node":">=18"}}
+{"name":"losharagram","version":"1.0.0","private":true,"engines":{"node":">=18"},"dependencies":{"pg":"^8.13.1"}}
