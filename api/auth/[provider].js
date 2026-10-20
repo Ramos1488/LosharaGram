@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { sign, cookies, setCookie } = require('../../lib/session');
+const { saveUser } = require('../../lib/db');
 const J = (u, h) => fetch(u, { headers: h }).then(r => r.json());
 const P = {
   github: {
@@ -50,7 +51,13 @@ module.exports = async (req, res) => {
   });
   const t = await r.json();
   if (!t.access_token) return res.status(400).end('Token exchange failed');
-  const u = await p.profile(t.access_token);
-  setCookie(res, 'lg_session', sign({ ...u, exp: Date.now() + 30 * 864e5 }), 30 * 86400);
-  res.writeHead(302, { Location: '/' }); res.end();
+  try {
+    const u = await p.profile(t.access_token);
+    await saveUser(u);
+    setCookie(res, 'lg_session', sign({ ...u, exp: Date.now() + 30 * 864e5 }), 30 * 86400);
+    res.writeHead(302, { Location: '/' }); return res.end();
+  } catch (error) {
+    console.error('OAuth sign-in failed:', error);
+    return res.status(503).end('Sign-in could not be completed. Check the database connection and try again.');
+  }
 };
